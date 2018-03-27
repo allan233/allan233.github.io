@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://allan233.github.io/"/>
-  <updated>2018-03-24T07:01:37.444Z</updated>
+  <updated>2018-03-27T05:17:42.249Z</updated>
   <id>http://allan233.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mac下gem安装rilas报错 Failed to build gem native extension 解决方法</title>
+    <link href="http://allan233.github.io/2018/03/27/Mac%E4%B8%8Bgem%E5%AE%89%E8%A3%85rilas%E6%8A%A5%E9%94%99-Failed-to-build-gem-native-extension-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>http://allan233.github.io/2018/03/27/Mac下gem安装rilas报错-Failed-to-build-gem-native-extension-解决方法/</id>
+    <published>2018-03-27T05:09:01.000Z</published>
+    <updated>2018-03-27T05:17:42.249Z</updated>
+    
+    <content type="html"><![CDATA[<p>Mac下安装老是报错，其实是mac自带ruby环境的问题，按照Ruby China社区的操作，重新配置一下环境即可跳坑。</p><p>下面转载一片官方文章。</p><p><a href="https://ruby-china.org/wiki/install_ruby_guide/" target="_blank" rel="noopener">https://ruby-china.org/wiki/install_ruby_guide/</a></p><h2 id="步骤0-－-安装系统需要的包"><a href="#步骤0-－-安装系统需要的包" class="headerlink" title="步骤0 － 安装系统需要的包"></a>步骤0 － 安装系统需要的包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># For Mac </span><br><span class="line"># 先安装 [Xcode](http://developer.apple.com/xcode/) 开发工具，它将帮你安装好 Unix 环境需要的开发包</span><br><span class="line"># 然后安装 [Homebrew](http://brew.sh)</span><br><span class="line">$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure><p>OS X 安装 Rails 必要的一些三方库</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install libxml2 libxslt libiconv</span><br></pre></td></tr></table></figure><h2 id="步骤1-－-安装-RVM"><a href="#步骤1-－-安装-RVM" class="headerlink" title="步骤1 － 安装 RVM"></a>步骤1 － 安装 RVM</h2><p>RVM 是干什么的这里就不解释了，后面你将会慢慢搞明白。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3</span><br><span class="line">$ curl -sSL https://get.rvm.io | bash -s stable</span><br><span class="line"># 如果上面的连接失败，可以尝试: </span><br><span class="line">$ curl -L https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable</span><br></pre></td></tr></table></figure><p>期间可能会问你 sudo 管理员密码，以及自动通过 <code>Homebrew</code> 安装依赖包，等待一段时间后就可以成功安装好 RVM。</p><p>然后，载入 RVM 环境（新开 Termal 就不用这么做了，会自动重新载入的）</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.rvm/scripts/rvm</span><br></pre></td></tr></table></figure><p>修改 RVM 下载 Ruby 的源，到 Ruby China 的镜像:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;ruby_url=https://cache.ruby-china.org/pub/ruby&quot; &gt; ~/.rvm/user/db</span><br></pre></td></tr></table></figure><p>检查一下是否安装正确</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rvm -v</span><br><span class="line">rvm 1.22.17 (stable) by Wayne E. Seguin &lt;wayneeseguin@gmail.com&gt;, Michal Papis &lt;mpapis@gmail.com&gt; [https://rvm.io/]</span><br></pre></td></tr></table></figure><h2 id="步骤2-－-用-RVM-安装-Ruby-环境"><a href="#步骤2-－-用-RVM-安装-Ruby-环境" class="headerlink" title="步骤2 － 用 RVM 安装 Ruby 环境"></a>步骤2 － 用 RVM 安装 Ruby 环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rvm requirements</span><br><span class="line">$ rvm install 2.3.0</span><br></pre></td></tr></table></figure><p>同样继续等待漫长的下载，编译过程，完成以后，Ruby, Ruby Gems 就安装好了。</p><h2 id="步骤3-－-设置-Ruby-版本"><a href="#步骤3-－-设置-Ruby-版本" class="headerlink" title="步骤3 － 设置 Ruby 版本"></a>步骤3 － 设置 Ruby 版本</h2><p>RVM 装好以后，需要执行下面的命令将指定版本的 Ruby 设置为系统默认版本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rvm use 2.3.0 --default</span><br></pre></td></tr></table></figure><p>同样，也可以用其他版本号，前提是你有用 rvm install 安装过那个版本</p><p>这个时候你可以测试是否正确</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -v</span><br><span class="line">ruby 2.3.0 ...</span><br><span class="line"></span><br><span class="line">$ gem -v</span><br><span class="line">2.1.6</span><br><span class="line"></span><br><span class="line">$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/</span><br></pre></td></tr></table></figure><h3 id="安装-Bundler"><a href="#安装-Bundler" class="headerlink" title="安装 Bundler"></a>安装 Bundler</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install bundler</span><br></pre></td></tr></table></figure><h2 id="步骤4-－-安装-Rails-环境"><a href="#步骤4-－-安装-Rails-环境" class="headerlink" title="步骤4 － 安装 Rails 环境"></a>步骤4 － 安装 Rails 环境</h2><p>上面 3 个步骤过后，Ruby 环境就安装好了，接下来安装 Rails</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gem install rails</span><br></pre></td></tr></table></figure><p>然后测试安装是否正确</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rails -v</span><br><span class="line">Rails 4.2.5</span><br></pre></td></tr></table></figure><p>然后开始你的 Ruby，Rails 之旅吧。 欢迎来到 Ruby 的世界！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Mac下安装老是报错，其实是mac自带ruby环境的问题，按照Ruby China社区的操作，重新配置一下环境即可跳坑。&lt;/p&gt;
+&lt;p&gt;下面转载一片官方文章。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ruby-china.org/wiki/install_ruby_
+      
+    
+    </summary>
+    
+    
+      <category term="rails" scheme="http://allan233.github.io/tags/rails/"/>
+    
+  </entry>
   
   <entry>
     <title>GitHub 精品项目推荐 第一期</title>
